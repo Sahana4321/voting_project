@@ -27,6 +27,7 @@ app.use("/users", usersRoutes);
 app.use("/query",usersRoutes );
 app.use("/options",usersRoutes );
 app.use("/vote",usersRoutes );
+app.use("/details",usersRoutes);
 
 app.listen(3000, () => {
   console.log("Connected");
