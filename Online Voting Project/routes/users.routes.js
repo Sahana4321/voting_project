@@ -181,7 +181,7 @@ router.post("/addoptions", usersController.addoptions);
  *            name: options
  *            description: Options data
  *            schema:
- *              type: object
+ *              type: array
  *              required:
  *                 - optionId
  *                 - queryId
@@ -287,21 +287,21 @@ router.post("/addoptions", usersController.addoptions);
   */
 
 
-  router.get("/getAllvote", usersController.getAllvote);
+  router.get("/getAllUsers", usersController.getAllUsers);
 
   /**
  
    * @swagger
  
-   * /vote/getAllvote:
+   * /details/getAllUsers:
  
    *   get:
  
-   *      description: get vote
+   *      description: Get User Details
  
    *      tags:
  
-   *          - vote
+   *          - details
  
    *          
  
@@ -319,4 +319,147 @@ router.post("/addoptions", usersController.addoptions);
  
    */
 
+
+
+   router.get("/getAlloptions", usersController.getAlloptions);
+
+  /**
+ 
+   * @swagger
+ 
+   * /details/getAlloptions:
+ 
+   *   get:
+ 
+   *      description: Get Options Details
+ 
+   *      tags:
+ 
+   *          - details
+ 
+   *          
+ 
+   *      responses:
+ 
+   *          '200':
+ 
+   *              description: successfull
+ 
+   *          '400':
+ 
+   *              description: error
+ 
+   *          
+ 
+   */
+
+
+  // get  All query
+   router.get("/getAllquery", usersController.getAllquery);
+
+   /**
+  
+    * @swagger
+  
+    * /details/getAllquery:
+  
+    *   get:
+  
+    *      description: Get Query Details
+  
+    *      tags:
+  
+    *          - details
+  
+    *          
+  
+    *      responses:
+  
+    *          '200':
+  
+    *              description: successfull
+  
+    *          '400':
+  
+    *              description: error
+  
+    *          
+  
+    */
+
+
+    // get Id list(queryId and optionId)
+    router.get("/getIdlist", usersController.getIdlist);
+
+    /**
+   
+     * @swagger
+   
+     * /details/getIdlist:
+   
+     *   get:
+   
+     *      description: Get Id Details
+   
+     *      tags:
+   
+     *          - details
+   
+     *          
+   
+     *      responses:
+   
+     *          '200':
+   
+     *              description: successfull
+   
+     *          '400':
+   
+     *              description: error
+   
+     *          
+   
+     */
+ 
+  
+   router.get("/gettotalvotes", usersController.gettotalvotes);
+
+   /**
+  
+    * @swagger
+  
+    * /vote/gettotalvotes:
+  
+    *   get:
+  
+    *      description: get votes
+  
+    *      tags:
+  
+    *          -  total vote
+  
+    *          
+  
+    *      responses:
+  
+    *          '200':
+  
+    *              description: successfull
+  
+    *          '400':
+  
+    *              description: error
+  
+    *          
+  
+    */
+ 
+
+ 
+
+
+  
+
+   
+ 
 module.exports = router;
