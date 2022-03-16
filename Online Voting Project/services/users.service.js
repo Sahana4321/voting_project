@@ -111,25 +111,99 @@ exports.castvote = (data, callback) => {
 
 };
 
-//get All votes
-exports.getAllvote = (data, callback) => {
+//get All Users
+exports.getAllUsers = (data, callback) => {
   db.query(
-
+  
+    `select firstName, lastName from users` ,   
  
-
-    'select firstName,lastName, optionId, options, queryName from users u INNER JOIN query q ON u.userId != q.userId INNER JOIN options o ON o.queryId=q.queryId',
-    [],
-
-
-
-       (error, results, fields) => {
+    (error, results, fields) => {
 
       if (error) {
 
         return callback(error);
-
       }
+      
+      return callback( null,results);
+    }
 
+   );
+
+};
+
+//get All Options
+exports.getAlloptions = (data, callback) => {
+  db.query(
+  
+    `select optionId, options, queryId from options` ,   
+ 
+    (error, results, fields) => {
+
+      if (error) {
+
+        return callback(error);
+      }
+      
+      return callback( null,results);
+    }
+
+   );
+
+};
+
+
+//get All query
+exports.getAllquery = (data, callback) => {
+  db.query(
+  
+    `select queryId, queryName from query` ,   
+ 
+    (error, results, fields) => {
+
+      if (error) {
+
+        return callback(error);
+      }
+      
+      return callback( null,results);
+    }
+
+   );
+
+};
+
+
+//get Id list
+exports.getIdlist = (data, callback) => {
+  db.query(
+  
+    `select queryId, optionId from vote where userId=8` ,   
+ 
+    (error, results, fields) => {
+
+      if (error) {
+
+        return callback(error);
+      }
+      
+      return callback( null,results);
+    }
+
+   );
+
+};
+
+//get  votes
+exports.gettotalvotes = (data, callback) => {
+  db.query(
+     `SELECT COUNT(userId)as totalvotes from vote WHERE queryId=2`,
+    (error, results, fields) => {
+
+      if (error) {
+
+        return callback(error);
+      }
+      
       return callback( null,results);
 
     }
