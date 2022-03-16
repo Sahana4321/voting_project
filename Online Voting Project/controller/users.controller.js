@@ -148,12 +148,12 @@ exports.castvote = (req, res, next) => {
 
 }
 
-//get vote
-exports.getAllvote = (req, res, next) => {
+//get All Users
+exports.getAllUsers = (req, res, next) => {
 
   const data = {};
 
-usersService.getAllvote(data, (error, results) => {
+usersService.getAllUsers(data, (error, results) => {
 
   if (error) {
 
@@ -174,3 +174,121 @@ usersService.getAllvote(data, (error, results) => {
 });
 
 };
+
+
+
+//get All Options
+exports.getAlloptions = (req, res, next) => {
+
+  const data = {};
+
+usersService.getAlloptions(data, (error, results) => {
+
+  if (error) {
+
+    console.log(error);
+
+    return res.status(400).send({ success: 0, data: "Bad request" });
+
+  }
+
+  return res.status(200).send({
+
+    success: 1,
+
+    data: results,
+
+  });
+
+});
+
+};
+
+
+
+//get All Query
+exports.getAllquery = (req, res, next) => {
+
+  const data = {};
+
+usersService.getAllquery(data, (error, results) => {
+
+  if (error) {
+
+    console.log(error);
+
+    return res.status(400).send({ success: 0, data: "Bad request" });
+
+  }
+
+  return res.status(200).send({
+
+    success: 1,
+
+    data: results,
+
+  });
+
+});
+
+};
+
+
+
+
+//get Id list
+exports.getIdlist = (req, res, next) => {
+
+  const data = {};
+
+usersService.getIdlist(data, (error, results) => {
+
+  if (error) {
+
+    console.log(error);
+
+    return res.status(400).send({ success: 0, data: "Bad request" });
+
+  }
+
+  return res.status(200).send({
+
+    success: 1,
+
+    data: results,
+
+  });
+
+});
+
+};
+
+
+//get  total vote
+exports.gettotalvotes = (req, res, next) => {
+
+  const data = {};
+
+usersService.gettotalvotes(data, (error, results) => {
+
+  if (error) {
+
+    console.log(error);
+
+    return res.status(400).send({ success: 0, data: "Bad request" });
+
+  }
+
+  return res.status(200).send({
+
+    success: 1,
+
+    data: results,
+
+  });
+
+});
+
+};
+
+
