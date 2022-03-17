@@ -1,7 +1,7 @@
 const express = require("express");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-
+const port = process.env.PORT || 3000;
 const app = express();
 const bodyParser = require("body-parser");
 const usersRoutes = require("./routes/users.routes");
@@ -29,6 +29,5 @@ app.use("/options",usersRoutes );
 app.use("/vote",usersRoutes );
 app.use("/details",usersRoutes);
 
-app.listen(3000, () => {
-  console.log("Connected");
-});
+app.listen(port,()=>{console.log('connected:'+port)});
+ 
