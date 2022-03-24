@@ -1,5 +1,6 @@
 const usersController = require("../controller/users.controller");
 var express = require("express");
+const { route } = require("express/lib/application");
 var router = express.Router();
 
 //user Registration
@@ -8,7 +9,7 @@ router.post("/register", usersController.register);
  * @swagger
  * /users/register:
  *   post:
- *      description: User Registration
+ *      description: User Registration ( Here user will register his/her details like firstname, lastname, emailid and password. These details will be stored in users table.)
  *      tags:
  *          - users
  *      parameters:
@@ -60,7 +61,7 @@ router.post("/login", usersController.login);
  * @swagger
  * /users/login:
  *   post:
- *      description: Used to login user
+ *      description: User Login (After Registration, user can login with his/her credentials (emailid and password))
  *      tags:
  *          - users
  *      parameters:
@@ -89,7 +90,7 @@ router.post("/login", usersController.login);
  *          '200':
  *              description: Login successfully
  *          '400':
- *              description: Inva
+ *              description: Invalid Credentials
  *         
  */
 
@@ -105,7 +106,7 @@ router.post("/addquery", usersController.addquery);
 
  *   post:
 
- *      description: adding query
+ *      description: Adding query (When admin logs in  he/she will be directed to another page where they can add the query).
 
  *      tags:
 
@@ -159,7 +160,7 @@ router.post("/addquery", usersController.addquery);
 
  *          '400':
 
- *              description: Error
+ *              description: Kindly add the query
 
  *          
 
@@ -173,7 +174,7 @@ router.post("/addoptions", usersController.addoptions);
  * @swagger
  * /options/addoptions:
  *   post:
- *      description: Options Data
+ *      description: Options Data (The admin can add the options for respective query)
  *      tags:
  *          - options
  *      parameters:
@@ -205,86 +206,54 @@ router.post("/addoptions", usersController.addoptions);
  *          '200':
  *              description: Options Added successfully
  *          '400':
- *              description: Error
+ *              description: Kindly add the options
  *          
  */
 
  //voting
+router.post("/castvote", usersController.castvote);
+/**
+ * @swagger
+ * /vote/castvote:
+ *   post:
+ *      description: casting vote (The users can cast a vote for the query posted/added by admin)
+ *      tags:
+ *          - vote
+ *      parameters:
+ *          - in: body
+ *            name: vote
+ *            description: Voting data
+ *            schema:
+ *              type: opject
+ *              required:
+ *                
+ *                 - queryId
+ *                 - optionId
+ *                 - userId
+ *                
+ *              properties:
+ *                 
+ *                  queryId:
+ *                      type: integer
+ *                      
+ *                      
+ *                  optionId:
+ *                      type: integer
+ *                  
+ *                  userId:
+ *                      type: integer
+ *                      
+ *                     
+ *      responses:
+ *          '200':
+ *              description: Voted casted successfully
+ *          '400':
+ *              description: Casting Unsuccessfull
+ *          
+ */
 
 
 
- router.post("/castvote", usersController.castvote);
-
- /**
-
-  * @swagger
-
-  * /vote/castvote:
-
-  *   post:
-
-  *      description: casting vote
-
-  *      tags:
-
-  *          - vote
-
-  *      parameters:
-
-  *          - in: body
-
-  *            name: vote
-
-  *            description: voting data
-
-  *            schema:
-
-  *              type: object
-
-  *              required:
-
-  *                 - voteId
-
-  *                 - queryId
-
-  *                 - optionId
-
-  *                 - userId
-
-  *                
-  *              properties:
-
-  *                  voteId:
-
-  *                      type: integer
-
-  *                  queryId:
-
-  *                      type: integer
-
-  *                  optionId:
-
-  *                      type:integer
-
-  *                  userId:
-
-  *                      type:integer
-
-  *                  
-
-  *      responses:
-
-  *          '200':
-
-  *              description: vote casted successfully
-
-  *          '400':
-
-  *              description: error
-
-  *          
-
-  */
 
 
   router.get("/getAllUsers", usersController.getAllUsers);
@@ -297,7 +266,7 @@ router.post("/addoptions", usersController.addoptions);
  
    *   get:
  
-   *      description: Get User Details
+   *      description: To get user details.
  
    *      tags:
  
@@ -313,7 +282,7 @@ router.post("/addoptions", usersController.addoptions);
  
    *          '400':
  
-   *              description: error
+   *              description: Bad Request
  
    *          
  
@@ -331,7 +300,7 @@ router.post("/addoptions", usersController.addoptions);
  
    *   get:
  
-   *      description: Get Options Details
+   *      description: To Get Options Details
  
    *      tags:
  
@@ -347,7 +316,7 @@ router.post("/addoptions", usersController.addoptions);
  
    *          '400':
  
-   *              description: error
+   *              description: Bad Request
  
    *          
  
@@ -365,7 +334,7 @@ router.post("/addoptions", usersController.addoptions);
   
     *   get:
   
-    *      description: Get Query Details
+    *      description: To Get Query Details
   
     *      tags:
   
@@ -381,7 +350,7 @@ router.post("/addoptions", usersController.addoptions);
   
     *          '400':
   
-    *              description: error
+    *              description: Bad Request
   
     *          
   
@@ -399,7 +368,7 @@ router.post("/addoptions", usersController.addoptions);
    
      *   get:
    
-     *      description: Get Id Details
+     *      description:  To list  Id Details
    
      *      tags:
    
@@ -415,7 +384,7 @@ router.post("/addoptions", usersController.addoptions);
    
      *          '400':
    
-     *              description: error
+     *              description: Bad Request
    
      *          
    
@@ -432,7 +401,7 @@ router.post("/addoptions", usersController.addoptions);
   
     *   get:
   
-    *      description: get votes
+    *      description: To get total number of  votes.
   
     *      tags:
   
@@ -448,15 +417,282 @@ router.post("/addoptions", usersController.addoptions);
   
     *          '400':
   
-    *              description: error
+    *              description: Bad Request
+  
+    *          
+  
+    */
+    router.patch("/updatepassword", usersController.updatepassword);
+
+    
+   /**
+  
+    * @swagger
+  
+    * /update/updatepassword:
+  
+    *   patch:
+  
+    *      description: Updating the password
+  
+    *      tags:
+  
+    *          -  update
+
+    *      parameters:
+ *          - in: body
+ *            name: update
+ *            description: updating password
+ *            schema:
+ *              type: opject
+ *              required:
+ *                
+ *                 - emailId
+ *                 - password
+ *             
+ *                
+ *              properties:
+ *                 
+ *                  emailId:
+ *                      type: string
+ *                      
+ *                      
+ *                  password:
+ *                      type: string
+  
+    *          
+  
+    *      responses:
+  
+    *          '200':
+  
+    *              description: updated successfull
+  
+    *          '400':
+  
+    *              description: Bad Request
   
     *          
   
     */
  
+    router.delete("/deleteoption", usersController.deleteoption);
 
- 
+    /**
+    
+    * @swagger
+    
+    * /delete/deleteoption:
+    
+    *   delete:
+    
+    *      description: Updating the password
+    
+    *      tags:
+    
+    *          -  delete
+    
+    *      parameters:
+    
+    
+    
+    *          - in: body
+    
+    
+    
+    *            name: delete
+    
+    
+    
+    *            description: deleting option
+    
+    
+    
+    *            schema:
+    
+    
+    
+    *              type: object
+    
+    
+    
+    *              required:
+    
+    
+    
+    *                 - optionId
+    
+    
+    
+    *                              
+    
+    
+    
+    *              properties:
+    
+    
+    
+    *                  optionId:
+    
+    
+    
+    *                      type: integer
+    
+    
+    
+    *                
+    
+    
+    
+    *      responses:
+    
+    *          '200':
+    
+    *              description: deleted successfully
+    
+    *          '400':
+    
+    *              description: Bad Request
+    
+    *          
+    
+    */
 
+
+     router.get("/gettotalvote", usersController.gettotalvote);
+
+     /**
+     
+      * @swagger
+     
+      * /vote/gettotalvote:
+     
+      *   get:
+     
+      *      description: get total vote
+     
+      *      tags:
+     
+      *          - vote
+     
+      *          
+     
+      *      responses:
+     
+      *          '200':
+     
+      *              description: successfull
+     
+      *          '400':
+     
+      *              description: Bad request
+     
+      *          
+     
+      */
+
+      router.post("/totalVote", usersController.totalVote);
+
+
+
+      /**
+      
+      
+      
+       * @swagger
+      
+      
+      
+       * /vote/totalVote:
+      
+      
+      
+       *   post:
+      
+      
+      
+       *      description: posting totalvotes
+      
+      
+      
+       *      tags:
+      
+      
+      
+       *          - vote
+      
+      
+      
+       *      parameters:
+      
+      
+      
+       *          - in: body
+      
+      
+      
+       *            name: vote
+      
+      
+      
+       *            description: totalvotes data
+      
+      
+      
+       *            schema:
+      
+      
+      
+       *              type: object
+      
+      
+      
+       *              required:
+      
+      
+      
+       *                 - queryId              
+      
+       
+      
+       *              properties:
+      
+      
+      
+       *                  queryId:
+      
+      
+      
+       *                      type: integer
+      
+      
+      
+      
+       *      responses:
+      
+      
+      
+       *          '200':
+      
+      
+      
+       *              description:  totalvotes posted successfully
+      
+      
+      
+       *          '400':
+      
+      
+      
+       *              description: error
+      
+      
+      
+       *          
+      
+      
+      
+       */
 
   
 
