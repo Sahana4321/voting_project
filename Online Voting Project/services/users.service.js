@@ -17,14 +17,14 @@ exports.register = (data, callback) => {
 
 exports.login = (data, callback) => {
   db.query(
-    `SELECT userId FROM users WHERE emailId = ? AND password = ?`,
+    `SELECT userId,firstName, lastName FROM users WHERE emailId = ? AND password = ?`,
     [data.emailId, data.password],
     (error, results, fields) => {
       if (error) {
         return callback(error);
       }
       if (results.length > 0) {
-        return callback(null, "Login success");
+        return callback(null, results);
         
      
       } else {
@@ -52,7 +52,7 @@ exports.addquery = (data, callback) => {
 
       }
 
-      return callback(null, `Query Added successfully`);
+      return callback(null, results);
 
     }
 
@@ -91,9 +91,9 @@ exports.castvote = (data, callback) => {
 
   db.query(
 
-      `INSERT INTO vote(voteId, queryId, optionId, userId) VALUES (?,?,?,?)`,
+      `INSERT INTO vote(queryId, optionId, userId) VALUES (?,?,?)`,
 
-      [data.voteId, data.queryId, data.optionId, data.userId],
+      [data.queryId, data.optionId, data.userId],
 
     (error, results, fields) => {
 
@@ -195,8 +195,10 @@ exports.getIdlist = (data, callback) => {
 
 //get  votes
 exports.gettotalvotes = (data, callback) => {
+
   db.query(
-     `SELECT COUNT(userId)as totalvotes from vote WHERE queryId=2`,
+
+     `SELECT queryId, sum(totalvotes)from vote `,
     (error, results, fields) => {
 
       if (error) {
@@ -209,5 +211,98 @@ exports.gettotalvotes = (data, callback) => {
     }
 
    );
+
+};
+exports.updatepassword = (data, callback) => {
+
+  console.log(data);
+
+  db.query(
+
+      `UPDATE users SET password = ? WHERE  emailId = ? ;`,
+
+      [ data.password , data.emailId ],
+
+    (error, results, fields) => {
+
+      if (error) {
+
+        return callback(error);
+
+      }
+
+      return callback(null, `Password updated successfully`);
+
+    }
+
+  );
+
+};
+
+exports.deleteoption = (data, callback) => {
+  console.log(data);
+  db.query(
+    `DELETE from options where optionId = ? `,
+      [ data.optionId ],
+    (error, results, fields) => {
+      if (error) {
+        return callback(error);
+      }
+        return callback(null, `option deleted successfully`);
+    }
+
+  );
+
+};
+
+exports.gettotalvote = (data, callback) => {
+
+
+
+  db.query(
+
+ 
+
+    'SELECT count (optionId) AS "totalVote" ,queryId FROM vote GROUP BY queryId    ',
+
+   [],
+
+       (error, results, fields) => {
+
+      if (error) {
+
+        return callback(error);
+
+      }
+
+      return callback( null,results);
+
+    }
+
+   );
+
+};
+
+exports.totalVote = (data, callback) => {
+
+
+
+  db.query(
+
+    'SELECT count (optionId) AS "totalVote" from vote where queryId = ?  ',
+    [data.queryId],
+      (error, results, fields) => {
+
+      if (error) {
+
+        return callback(error);
+
+      }
+
+      return callback(null, results);
+
+    }
+
+  );
 
 };
