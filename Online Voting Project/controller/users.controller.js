@@ -2,6 +2,7 @@ const usersService = require("../services/users.service");
 
 //registration
 exports.register = (req, res, next) => {
+  
   // Validation 
   const data = {
     firstName: req.body.firstName,
@@ -21,7 +22,6 @@ exports.register = (req, res, next) => {
     });
   });
 };
-
 
 //login
 exports.login = (req, res, next) => {
@@ -43,6 +43,7 @@ exports.login = (req, res, next) => {
   };
 
   
+
 
 
   // Adding Query
@@ -120,7 +121,7 @@ exports.castvote = (req, res, next) => {
 
   const data = {
 
-    voteId: req.body.voteId,
+   
     queryId: req.body.queryId,
     optionId: req.body.optionId,
     userId: req.body.userId,
@@ -233,7 +234,41 @@ usersService.getAllquery(data, (error, results) => {
 
 };
 
+exports.updatepassword = (req, res, next) => {
 
+  // Validation
+
+  const data = {
+
+    emailId: req.body.emailId,
+
+    password: req.body.password,
+
+  };
+
+
+
+  usersService.updatepassword(data, (error, results) => {
+
+    if (error) {
+
+      console.log(error);
+
+      return res.status(400).send({ success: 0, data: "Bad request" });
+
+    }
+
+    return res.status(200).send({
+
+      success: 1,
+
+      data: "password updated succesfully",
+
+    });
+
+  });
+
+}
 
 
 //get Id list
@@ -291,4 +326,86 @@ usersService.gettotalvotes(data, (error, results) => {
 
 };
 
+exports.deleteoption = (req, res, next) => {
+// Validation
+  const data = {
+    optionId: req.body.optionId,
+
+  };
+  usersService.deleteoption(data, (error, results) => {
+    if (error) {
+      console.log(error);
+      return res.status(400).send({ success: 0, data: "Bad request" });
+    }
+    return res.status(200).send({
+      success: 1,
+      data: "option deleted succesfully",
+    });
+  });
+}
+exports.gettotalvote = (req, res, next) => {
+
+  const data = {};
+
+usersService.gettotalvote(data, (error, results) => {
+
+  if (error) {
+
+    console.log(error);
+
+    return res.status(400).send({ success: 0, data: "Bad request" });
+
+  }
+
+  return res.status(200).send({
+
+    success: 1,
+
+    data: results,
+
+  });
+
+});
+
+};
+exports.totalVote = (req, res, next) => {
+
+  // Validation
+
+  const data = {
+
+
+
+    queryId: req.body.queryId,
+
+
+
+
+
+
+  };
+
+
+
+  usersService.totalVote(data, (error, results) => {
+
+    if (error) {
+
+      console.log(error);
+
+      return res.status(400).send({ success: 0, data: "Bad request" });
+
+    }
+
+    return res.status(200).send({
+
+      success: 1,
+
+      data: results,
+
+    });
+
+  });
+
+}
 
