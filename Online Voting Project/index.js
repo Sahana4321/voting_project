@@ -28,6 +28,8 @@ app.use("/query",usersRoutes );
 app.use("/options",usersRoutes );
 app.use("/vote",usersRoutes );
 app.use("/details",usersRoutes);
+app.use("/update",usersRoutes);
+app.use("/delete",usersRoutes);
 
 app.listen(port,()=>{console.log('connected:'+port)});
  
