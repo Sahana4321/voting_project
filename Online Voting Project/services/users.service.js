@@ -239,16 +239,16 @@ exports.updatepassword = (data, callback) => {
 
 };
 
-exports.deleteoption = (data, callback) => {
+exports.deletequery = (data, callback) => {
   console.log(data);
   db.query(
-    `DELETE from options where optionId = ? `,
-      [ data.optionId ],
+    `DELETE from vote where queryId = ?  `,
+      [ data.queryId ],
     (error, results, fields) => {
       if (error) {
         return callback(error);
       }
-        return callback(null, `option deleted successfully`);
+        return callback(null, ` deleted successfully`);
     }
 
   );
