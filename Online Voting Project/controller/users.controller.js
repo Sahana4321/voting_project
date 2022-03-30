@@ -1,308 +1,409 @@
-const db = require("../config/db.config");
+const usersService = require("../services/users.service");
 
 //registration
-exports.register = (data, callback) => {
-  db.query(
-      `INSERT INTO users(firstName , lastName, emailId, password) VALUES (?,?,?,?)`,
-      [data.firstName, data.lastName, data.emailId, data.password],
-    (error, results, fields) => {
-      if (error) {
-        return callback(error);
-      }
-      return callback(null, `Registration successful`);
+exports.register = (req, res, next) => {
+  
+  // Validation 
+  const data = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    emailId: req.body.emailId,
+    password: req.body.password,
+    
+  };
+  usersService.register(data, (error, results) => {
+    if (error) {
+      console.log(error);
+      return res.status(400).send({ success: 0, data: "Email Already Exist" });
     }
-  );
+    return res.status(200).send({
+      success: 1,
+      data: results,
+    });
+  });
 };
 
-
-exports.login = (data, callback) => {
-  db.query(
-    `SELECT userId,firstName, lastName FROM users WHERE emailId = ? AND password = ?`,
-    [data.emailId, data.password],
-    (error, results, fields) => {
+//login
+exports.login = (req, res, next) => {
+    // Validation area
+    const data = {
+      emailId: req.body.emailId,
+      password: req.body.password,
+    };
+    usersService.login(data, (error, results) => {
       if (error) {
-        return callback(error);
+        console.log(error);
+        return res.status(400).send({ success: 0, data: "Invalid Credentials" });
       }
-      if (results.length > 0) {
-        return callback(null, results);
-        
-     
-      } else {
-        return callback("Invalid credentials");
-      } 
-    }
-  );
-};
+      return res.status(200).send({
+        success: 1,
+        data: results,
+      });
+    });
+  };
 
+  
 
-// Adding Query
-exports.addquery = (data, callback) => {
+  // Adding Query
+  exports.addquery = (req, res, next) => {
 
-  db.query(
-
-      `INSERT INTO query(queryName , queryStartDate, queryEndDate) VALUES (?,?,?)`,
-
-      [data.queryName, data.queryStartDate, data.queryEndDate],
-
-    (error, results, fields) => {
-
+    // Validation
+  
+    const data = {
+  
+      queryName: req.body.queryName,
+      queryStartDate: req.body.queryStartDate,
+      queryEndDate: req.body.  queryEndDate,
+    };
+  
+    usersService.addquery(data, (error, results) => {
+  
       if (error) {
-
-        return callback(error);
-
+  
+        console.log(error);
+  
+        return res.status(400).send({ success: 0, data: "Bad request" });
+  
       }
-
-      return callback(null, results);
-
-    }
-
-  );
-
-};
-
+  
+      return res.status(200).send({
+  
+        success: 1,
+  
+        data: results,
+  
+      });
+  
+    });
+  
+  }
 
 // Adding Options
-exports.addoptions = (data, callback) => {
+  exports.addoptions = (req, res, next) => {
 
-  db.query(
-
-      `INSERT INTO options(optionId, queryId, options) VALUES (?,?,?)`,
-
-      [data.optionId, data.queryId, data.options],
-
-    (error, results, fields) => {
-
+    // Validation
+    const data = {
+  
+      optionId: req.body.optionId,
+      queryId: req.body.queryId,
+      options: req.body.options,
+      
+    };
+  
+    usersService.addoptions(data, (error, results) => {
+  
       if (error) {
-
-        return callback(error);
-
+  
+        console.log(error);
+  
+        return res.status(400).send({ success: 0, data: "Bad request" });
+  
       }
+  
+      return res.status(200).send({
+  
+        success: 1,
+  
+        data: results,
+  
+      });
+  
+    });
+  
+  }
 
-      return callback(null, `Options added successfully`);
+  //voting
+exports.castvote = (req, res, next) => {
+
+  // Validation
+
+  const data = {
+
+   
+    queryId: req.body.queryId,
+    optionId: req.body.optionId,
+    userId: req.body.userId,
+    
+};
+  usersService.castvote(data, (error, results) => {
+
+    if (error) {
+
+      console.log(error);
+
+      return res.status(400).send({ success: 0, data: "Bad request" });
 
     }
 
-  );
+    return res.status(200).send({
 
-};
+      success: 1,
 
-//voting
-exports.castvote = (data, callback) => {
+      data: results,
 
-  db.query(
+    });
 
-      `INSERT INTO vote(queryId, optionId, userId) VALUES (?,?,?)`,
+  });
 
-      [data.queryId, data.optionId, data.userId],
-
-    (error, results, fields) => {
-
-      if (error) {
-
-        return callback(error);
-
-      }
-
-      return callback(null, `vote casted successfully`);
-
-    }
-
-  );
-
-};
+}
 
 //get All Users
-exports.getAllUsers = (data, callback) => {
-  db.query(
-  
-    `select firstName, lastName from users` ,   
- 
-    (error, results, fields) => {
+exports.getAllUsers = (req, res, next) => {
 
-      if (error) {
+  const data = {};
 
-        return callback(error);
-      }
-      
-      return callback( null,results);
-    }
+usersService.getAllUsers(data, (error, results) => {
 
-   );
+  if (error) {
+
+    console.log(error);
+
+    return res.status(400).send({ success: 0, data: "Bad request" });
+
+  }
+
+  return res.status(200).send({
+
+    success: 1,
+
+    data: results,
+
+  });
+
+});
 
 };
+
+
 
 //get All Options
-exports.getAlloptions = (data, callback) => {
-  db.query(
-  
-    `select optionId, options, queryId from options` ,   
- 
-    (error, results, fields) => {
+exports.getAlloptions = (req, res, next) => {
 
-      if (error) {
+  const data = {};
 
-        return callback(error);
-      }
-      
-      return callback( null,results);
-    }
+usersService.getAlloptions(data, (error, results) => {
 
-   );
+  if (error) {
+
+    console.log(error);
+
+    return res.status(400).send({ success: 0, data: "Bad request" });
+
+  }
+
+  return res.status(200).send({
+
+    success: 1,
+
+    data: results,
+
+  });
+
+});
+
+};
+
+
+
+//get All Query
+exports.getAllquery = (req, res, next) => {
+
+  const data = {};
+
+usersService.getAllquery(data, (error, results) => {
+
+  if (error) {
+
+    console.log(error);
+
+    return res.status(400).send({ success: 0, data: "Bad request" });
+
+  }
+
+  return res.status(200).send({
+
+    success: 1,
+
+    data: results,
+
+  });
+
+});
 
 };
 
+exports.updatepassword = (req, res, next) => {
 
-//get All query
-exports.getAllquery = (data, callback) => {
-  db.query(
-  
-    `select queryId, queryName from query` ,   
- 
-    (error, results, fields) => {
+  // Validation
 
-      if (error) {
+  const data = {
 
-        return callback(error);
-      }
-      
-      return callback( null,results);
+    emailId: req.body.emailId,
+
+    password: req.body.password,
+
+  };
+
+
+
+  usersService.updatepassword(data, (error, results) => {
+
+    if (error) {
+
+      console.log(error);
+
+      return res.status(400).send({ success: 0, data: "Bad request" });
+
     }
 
-   );
+    return res.status(200).send({
 
-};
+      success: 1,
+
+      data: "password updated succesfully",
+
+    });
+
+  });
+
+}
 
 
 //get Id list
-exports.getIdlist = (data, callback) => {
-  db.query(
-  
-    `select queryId, optionId from vote where userId=8` ,   
- 
-    (error, results, fields) => {
+exports.getIdlist = (req, res, next) => {
 
-      if (error) {
+  const data = {};
 
-        return callback(error);
-      }
-      
-      return callback( null,results);
-    }
+usersService.getIdlist(data, (error, results) => {
 
-   );
+  if (error) {
 
-};
+    console.log(error);
 
-//get  votes
-exports.gettotalvotes = (data, callback) => {
+    return res.status(400).send({ success: 0, data: "Bad request" });
 
-  db.query(
+  }
 
-     `SELECT queryId, sum(totalvotes)from vote `,
-    (error, results, fields) => {
+  return res.status(200).send({
 
-      if (error) {
+    success: 1,
 
-        return callback(error);
-      }
-      
-      return callback( null,results);
+    data: results,
 
-    }
+  });
 
-   );
-
-};
-exports.updatepassword = (data, callback) => {
-
-  console.log(data);
-
-  db.query(
-
-      `UPDATE users SET password = ? WHERE  emailId = ? ;`,
-
-      [ data.password , data.emailId ],
-
-    (error, results, fields) => {
-
-      if (error) {
-
-        return callback(error);
-
-      }
-
-      return callback(null, `Password updated successfully`);
-
-    }
-
-  );
+});
 
 };
 
-exports.deletequery = (data, callback) => {
-  console.log(data);
-  db.query(
-    `DELETE from vote where queryId = ?  `,
-      [ data.queryId ],
-    (error, results, fields) => {
-      if (error) {
-        return callback(error);
-      }
-        return callback(null, ` deleted successfully`);
-    }
 
-  );
+//get  total vote
+exports.gettotalvotes = (req, res, next) => {
 
-};
+  const data = {};
 
-exports.gettotalvote = (data, callback) => {
+usersService.gettotalvotes(data, (error, results) => {
 
+  if (error) {
 
+    console.log(error);
 
-  db.query(
+    return res.status(400).send({ success: 0, data: "Bad request" });
 
- 
+  }
 
-    'SELECT count (optionId) AS "totalVote" ,queryId FROM vote GROUP BY queryId    ',
+  return res.status(200).send({
 
-   [],
+    success: 1,
 
-       (error, results, fields) => {
+    data: results,
 
-      if (error) {
+  });
 
-        return callback(error);
-
-      }
-
-      return callback( null,results);
-
-    }
-
-   );
+});
 
 };
 
-exports.totalVote = (data, callback) => {
+exports.deletequery = (req, res, next) => {
+// Validation
+  const data = {
+    queryId: req.body.queryId,
+
+  };
+  usersService.deletequery(data, (error, results) => {
+    if (error) {
+      console.log(error);
+      return res.status(400).send({ success: 0, data: "Bad request" });
+    }
+    return res.status(200).send({
+      success: 1,
+      data: " deleted succesfully",
+    });
+  });
+}
+exports.gettotalvote = (req, res, next) => {
+
+  const data = {};
+
+usersService.gettotalvote(data, (error, results) => {
+
+  if (error) {
+
+    console.log(error);
+
+    return res.status(400).send({ success: 0, data: "Bad request" });
+
+  }
+
+  return res.status(200).send({
+
+    success: 1,
+
+    data: results,
+
+  });
+
+});
+
+};
+exports.totalVote = (req, res, next) => {
+
+  // Validation
+
+  const data = {
 
 
 
-  db.query(
+    queryId: req.body.queryId,
 
-    'SELECT count (optionId) AS "totalVote" from vote where queryId = ?  ',
-    [data.queryId],
-      (error, results, fields) => {
 
-      if (error) {
 
-        return callback(error);
 
-      }
 
-      return callback(null, results);
+
+  };
+
+
+
+  usersService.totalVote(data, (error, results) => {
+
+    if (error) {
+
+      console.log(error);
+
+      return res.status(400).send({ success: 0, data: "Bad request" });
 
     }
 
-  );
+    return res.status(200).send({
 
-};
+      success: 1,
+
+      data: results,
+
+    });
+
+  });
+
+}
+
