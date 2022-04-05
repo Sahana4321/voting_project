@@ -325,7 +325,7 @@ router.post("/castvote", usersController.castvote);
 
   // get  All query
    router.get("/getAllquery", usersController.getAllquery);
-
+   
    /**
   
     * @swagger
@@ -355,6 +355,41 @@ router.post("/castvote", usersController.castvote);
     *          
   
     */
+
+
+   // get  All query
+   router.get("/getFilteredQuery", usersController.getFilteredQuery);
+   
+   /**
+  
+    * @swagger
+  
+    * /details/getFilteredQuery
+    *   get:
+  
+    *      description: To Get Query Details
+  
+    *      tags:
+  
+    *          - details
+  
+    *          
+  
+    *      responses:
+  
+    *          '200':
+  
+    *              description: successfull
+  
+    *          '400':
+  
+    *              description: Bad Request
+  
+    *          
+  
+    */
+
+
 
 
     // get Id list(queryId and optionId)

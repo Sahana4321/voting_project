@@ -223,6 +223,27 @@ exports.getAllquery = (req, res, next) => {
 
 };
 
+exports.getFilteredQuery = (req, res, next) => {
+  const data = {};
+  usersService.getFilteredQuery(data, (error, results) => {
+    if (error) {
+      console.log(error);
+      return res.status(400).send({ success: 0, data: "Bad request" });
+    }
+    else {
+
+      return (
+        res.status(200).send({
+          data: results,
+        })
+
+      )
+    }
+
+  });
+
+};
+
 const getoptions = (id) => {
   db.query(
     `select optionId, options, queryId from options where queryId = ?`, [id],

@@ -144,24 +144,31 @@ exports.getAlloptions = (data, callback) => {
   );
 };
 
-exports.getAlloptions_byid = (data, callback) => {
-  db.query(
-    `select optionId, options, queryId from options where queryId = ?`, [data.queryId],
-    (error, results, fields) => {
-      if (error) {
-        return callback(error);
-      }
-      return callback(null, results);
-    }
-  );
-};
-
 
 //get All query
 exports.getAllquery = (data, callback) => {
   db.query(
   
-    `select queryId, queryName, querystartdate , queryenddate from query where DATE(queryenddate) > DATE_FORMAT(now(),GET_FORMAT(DATE,'ISO'));
+    `select queryId, queryName, querystartdate , queryenddate from query ` ,   
+ 
+    (error, results, fields) => {
+
+      if (error) {
+
+        return callback(error);
+      }
+      
+      return callback( null,results);
+    }
+
+   );
+
+};
+
+exports.getFilteredQuery = (data, callback) => {
+  db.query(
+  
+    `select queryId, queryName, querystartdate , queryenddate from query where DATE(queryenddate) > DATE_FORMAT(now(),GET_FORMAT(DATETIME,'ISO'));
     ` ,   
  
     (error, results, fields) => {
