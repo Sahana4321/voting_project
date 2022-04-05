@@ -290,7 +290,7 @@ router.post("/castvote", usersController.castvote);
 
 
 
-   router.get("/getAlloptions", usersController.getAlloptions);
+   router.post("/getAlloptions", usersController.getAlloptions);
 
   /**
  
@@ -358,7 +358,7 @@ router.post("/castvote", usersController.castvote);
 
 
     // get Id list(queryId and optionId)
-    router.get("/getIdlist", usersController.getIdlist);
+    router.post("/getIdlist", usersController.getIdlist);
 
     /**
    
@@ -366,7 +366,7 @@ router.post("/castvote", usersController.castvote);
    
      * /details/getIdlist:
    
-     *   get:
+     *   post:
    
      *      description:  To list  Id Details
    
@@ -422,7 +422,7 @@ router.post("/castvote", usersController.castvote);
     *          
   
     */
-    router.patch("/updatepassword", usersController.updatepassword);
+    router.put("/updatepassword", usersController.updatepassword);
 
     
    /**
@@ -694,6 +694,191 @@ router.post("/castvote", usersController.castvote);
       
        */
 
+       router.post("/voteforsingleoption", usersController.voteforsingleoption);
+
+
+
+       /**
+       
+       
+       
+        * @swagger
+       
+       
+       
+        * /vote/totalvoteforsingleoption:
+       
+       
+       
+        *   post:
+       
+       
+       
+        *      description: total vote for single option
+       
+       
+       
+        *      tags:
+       
+       
+       
+        *          - vote
+       
+       
+       
+        *      parameters:
+       
+       
+       
+        *          - in: body
+       
+       
+       
+        *            name: vote
+       
+       
+       
+        *            description: totalvotes data
+       
+       
+       
+        *            schema:
+       
+       
+       
+        *              type: object
+       
+       
+       
+        *              required:
+       
+       
+       
+        *                 - optionId              
+       
+        
+       
+        *              properties:
+       
+       
+       
+        *                  optionId:
+       
+       
+       
+        *                      type: integer
+       
+       
+       
+       
+        *      responses:
+       
+       
+       
+        *          '200':
+       
+       
+       
+        *              description:  totalvoteforsingleoption
+       
+       
+       
+        *          '400':
+       
+       
+       
+        *              description: error
+       
+       
+       
+        *          
+       
+       
+       
+        */
+
+        router.delete("/deletequery", usersController.deletequery);
+
+        /**
+        
+        * @swagger
+        
+        * /delete/deletequery:
+        
+        *   delete:
+        
+        *      description:  Deleting 
+        
+        *      tags:
+        
+        *          -  delete
+        
+        *      parameters:
+        
+        
+        
+        *          - in: body
+        
+        
+        
+        *            name: delete
+        
+        
+        
+        *            description: deleting query
+        
+        
+        
+        *            schema:
+        
+        
+        
+        *              type: object
+        
+        
+        
+        *              required:
+        
+        
+        
+        *                 - queryId
+        
+        
+        
+        *                              
+        
+        
+        
+        *              properties:
+        
+        
+        
+        *                  queryId:
+        
+        
+        
+        *                      type: integer
+        
+        
+        
+        *                
+        
+        
+        
+        *      responses:
+        
+        *          '200':
+        
+        *              description: deleted successfully
+        
+        *          '400':
+        
+        *              description: Bad Request
+        
+        *          
+        
+        */
+    
   
 
    
