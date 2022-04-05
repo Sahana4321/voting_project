@@ -7,7 +7,7 @@ const db = createPool({
 
   user: "root",
 
-  password: "root",
+  password: "password",
 
   database: "Online_voting",
 
