@@ -476,17 +476,17 @@ router.post("/castvote", usersController.castvote);
   
     */
  
-    router.delete("/deleteoption", usersController.deleteoption);
+    router.delete("/deletequery", usersController.deletequery);
 
     /**
     
     * @swagger
     
-    * /delete/deleteoption:
+    * /delete/deletequery:
     
     *   delete:
     
-    *      description: Updating the password
+    *      description:  Deleting 
     
     *      tags:
     
@@ -504,7 +504,7 @@ router.post("/castvote", usersController.castvote);
     
     
     
-    *            description: deleting option
+    *            description: deleting query
     
     
     
@@ -520,7 +520,7 @@ router.post("/castvote", usersController.castvote);
     
     
     
-    *                 - optionId
+    *                 - queryId
     
     
     
@@ -532,7 +532,7 @@ router.post("/castvote", usersController.castvote);
     
     
     
-    *                  optionId:
+    *                  queryId:
     
     
     
@@ -557,7 +557,6 @@ router.post("/castvote", usersController.castvote);
     *          
     
     */
-
 
      router.get("/gettotalvote", usersController.gettotalvote);
 

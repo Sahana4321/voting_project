@@ -331,17 +331,17 @@ exports.gettotalvotes = (req, res, next) => {
 exports.deleteoption = (req, res, next) => {
   // Validation
   const data = {
-    optionId: req.body.optionId,
+    queryId: req.body.queryId,
 
   };
-  usersService.deleteoption(data, (error, results) => {
+  usersService.deletequery(data, (error, results) => {
     if (error) {
       console.log(error);
       return res.status(400).send({ success: 0, data: "Bad request" });
     }
     return res.status(200).send({
       success: 1,
-      data: "option deleted succesfully",
+      data: " deleted succesfully",
     });
   });
 }

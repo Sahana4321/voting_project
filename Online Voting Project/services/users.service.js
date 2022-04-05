@@ -161,7 +161,7 @@ exports.getAlloptions_byid = (data, callback) => {
 exports.getAllquery = (data, callback) => {
   db.query(
   
-    `select queryId, queryName, querystartdate , queryenddate from query where DATE(queryenddate) > DATE_FORMAT(now(),GET_FORMAT(DATE,'EUR'));
+    `select queryId, queryName, querystartdate , queryenddate from query where DATE(queryenddate) > DATE_FORMAT(now(),GET_FORMAT(DATE,'ISO'));
     ` ,   
  
     (error, results, fields) => {
@@ -245,7 +245,7 @@ exports.updatepassword = (data, callback) => {
 
 };
 
-exports.deleteoption = (data, callback) => {
+exports.deletequery = (data, callback) => {
   console.log(data);
   db.query(
     `DELETE from options where optionId = ? `,
